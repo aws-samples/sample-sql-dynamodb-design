@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "awslabs-dynamodb-mcp-server": {
+      "disabled": false,
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "--from",
+        "awslabs.dynamodb-mcp-server@latest",
+        "awslabs.dynamodb-mcp-server.exe"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "us-east-1"
+      },
+      "autoApprove": [
+        "dynamodb_data_modeling",
+        "compute_performances_and_costs",
+        "dynamodb_data_model_validation"
+      ]
+    }
+  }
+}

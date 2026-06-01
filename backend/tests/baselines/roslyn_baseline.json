@@ -1,0 +1,27 @@
+{
+  "entity_names": [
+    "Address",
+    "Category",
+    "Inventory",
+    "Order",
+    "OrderItem",
+    "Product",
+    "Profile",
+    "Review",
+    "User"
+  ],
+  "entity_sources": {
+    "Order": "dbcontext",
+    "OrderItem": "dbcontext",
+    "Product": "dbcontext",
+    "Category": "dbcontext",
+    "Inventory": "dbcontext",
+    "Review": "dbcontext",
+    "User": "dbcontext",
+    "Profile": "dbcontext",
+    "Address": "dbcontext"
+  },
+  "db_method_count": 36,
+  "supplementary_method_count": 1,
+  "ef_core_detected": true
+}
