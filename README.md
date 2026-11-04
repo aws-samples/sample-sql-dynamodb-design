@@ -142,6 +142,29 @@ Both outputs are combined and sent to the LLM for classification and naming. A c
 
 ---
 
+## Running Tests
+
+Tests are organized into tiers and run through `run_tests.py` from the repository root. With no arguments, only the fast tiers (0 and 1) run, and these don't call Bedrock.
+
+| Tier | Suite | File | Requires Bedrock? |
+|------|-------|------|-------------------|
+| 0 | Infrastructure (imports, DB models, startup) | `backend/tests/test_infrastructure.py` | No |
+| 1 | Roslyn deterministic (golden baseline) | `backend/tests/test_roslyn.py` | No |
+| 2 | Extraction | `backend/tests/test_extraction.py` | Yes |
+| 3 | Pipeline end-to-end | `backend/tests/test_pipeline_e2e.py` | Yes |
+| 4 | Cross-run drift (uses DB history) | `backend/tests/test_consistency.py` | No |
+
+```bash
+python run_tests.py                        # Fast tests only (tiers 0 + 1)
+python run_tests.py --tier 2               # A single tier
+python run_tests.py --all                  # All tiers
+python run_tests.py --tier 3 --profile <your-profile> -v   # Bedrock tiers with a specific AWS profile
+```
+
+Tier 0 includes a TypeScript compile check, so run `npm install` in `frontend/` first (step 2 above). Otherwise `npx tsc` resolves to an unrelated npm package and the test fails. Tier 1 is skipped if the Roslyn analyzer hasn't been built (see step 3 above). Tiers 2 and 3 need valid AWS credentials with Bedrock model access. Tier 4 analyzes previous pipeline runs stored in `app.db` and is skipped until at least 3 runs exist.
+
+---
+
 ## Troubleshooting
 
 | Issue | Fix |
